@@ -22,7 +22,7 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const profile = require("./src/routers/profile");
+const profile = require("./src/routers/user");
 
 app.use("/", profile);
 
