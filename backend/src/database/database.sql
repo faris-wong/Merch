@@ -25,6 +25,6 @@ price INT NOT NULL,
 date_listed TIMESTAMP NOT NULL DEFAULT NOW(),
 date_transacted TIMESTAMP,
 seller_uuid UUID NOT NULL REFERENCES users(uuid),
-purchased BOOLEAN NOT NULL,
+purchased BOOLEAN NOT NULL DEFAULT false,
 buyer_uuid UUID REFERENCES users(uuid)
 )

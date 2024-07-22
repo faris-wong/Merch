@@ -22,9 +22,11 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const profile = require("./src/routers/user");
+const user = require("./src/routers/user");
+const product = require("./src/routers/product");
+const { createProduct } = require("./src/controllers/product");
 
-app.use("/", profile);
+app.use("/", user, product);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

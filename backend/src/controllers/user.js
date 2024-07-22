@@ -80,7 +80,6 @@ const login = async (req, res) => {
   }
 };
 
-// modify to make parameters optional
 const updateUserById = async (req, res) => {
   try {
     const { uuid, username, address, contact } = req.body;
