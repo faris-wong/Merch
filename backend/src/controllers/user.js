@@ -84,10 +84,27 @@ const login = async (req, res) => {
 const updateUserById = async (req, res) => {
   try {
     const { uuid, username, address, contact } = req.body;
-    const data = await pool.query(
-      "UPDATE users SET username = $2, address = $3, contact= $4 WHERE uuid = $1",
-      [uuid, username, address, contact]
-    );
+    const updates = [];
+    const values = [uuid];
+    let query = "UPDATE users SET";
+
+    if (username) {
+      values.push(username);
+      updates.push(` username = $${values.length}`);
+    }
+    if (address) {
+      values.push(address);
+      updates.push(` address = $${values.length}`);
+    }
+    if (contact) {
+      values.push(contact);
+      updates.push(` contact = $${values.length}`);
+    }
+
+    query += updates.join(",") + " WHERE uuid = $1 RETURNING *";
+
+    const data = await pool.query(query, values);
+
     res.json({ status: "success", msg: "profile updated" });
   } catch (error) {
     console.error(error.message);
