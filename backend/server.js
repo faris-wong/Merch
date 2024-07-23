@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const path = require("path");
 const express = require("express");
-const { connectDB } = require("./src/database/database");
+// const { connectDB } = require("./src/database/database");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
@@ -24,9 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 
 const user = require("./src/routers/user");
 const product = require("./src/routers/product");
+const transaction = require("./src/routers/transaction");
 const { createProduct } = require("./src/controllers/product");
 
-app.use("/", user, product);
+app.use("/", user, product, transaction);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

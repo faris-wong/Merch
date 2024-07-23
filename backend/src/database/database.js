@@ -9,6 +9,4 @@ const pool = new Pool({
   database: "merch",
 });
 
-
-
 module.exports = { pool };
