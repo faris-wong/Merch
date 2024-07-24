@@ -106,7 +106,7 @@ updateProductById = async (req, res) => {
         updates.join(", ") +
         ` WHERE uuid = $1 AND seller_uuid = $2 RETURNING *`;
 
-      const data = await pool.client(query, values);
+      const data = await client.query(query, values);
       res.json({ status: "success", msg: "product updated" });
     } else {
       throw new Error();
