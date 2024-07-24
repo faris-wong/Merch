@@ -29,33 +29,29 @@ createTransaction = async (req, res) => {
       "SELECT users.wallet FROM users WHERE users.uuid = $1",
       [buyerid]
     );
-
-    console.log(buyerid, productdata.rows[0]);
-    const userwallet = buyerdata.rows[0].wallet;
-    const productprice = productdata.rows[0].price;
-
-    if (buyerid != productdata.rows[0].seller_uuid) {
-      if (userwallet > productprice) {
-        // const data = await client.query(
-        //   "INSERT INTO transactions(buyer_id, product_id) VALUES($1, $2);\nUPDATE users SET wallet = wallet - $4 WHERE uuid = buyerid;\nUPDATE products SET purchased = true WHERE uuid = productid;",
-        //   [buyerid, productid, userwallet, productprice]
-        // );
+    const userwallet = parseInt(buyerdata.rows[0].wallet);
+    const productprice = parseInt(productdata.rows[0].price);
+    const sellerid = productdata.rows[0].seller_uuid;
+    // console.log(typeof(userwallet), typeof(productprice), sellerid);
+    if (buyerid != sellerid) {
+      if (userwallet >= productprice) {
         await client.query("BEGIN");
         await client.query(
           "INSERT INTO transactions(buyer_id, product_id) VALUES($1, $2);",
           [buyerid, productid]
         );
-
         await client.query(
           "UPDATE users SET wallet = wallet - $1 WHERE uuid = $2;",
           [productprice, buyerid]
         );
-
+        await client.query(
+          "UPDATE users SET wallet = wallet + $1 WHERE uuid = $2;",
+          [productprice, sellerid]
+        );
         await client.query(
           "UPDATE products SET purchased = true WHERE uuid = $1;",
           [productid]
         );
-
         await client.query("COMMIT");
         res.json({ status: "success", msg: "transaction created" });
       } else {
