@@ -19,7 +19,6 @@ purchaseCredits = async (req, res) => {
 createTransaction = async (req, res) => {
   const client = await pool.connect();
   try {
-    await client.query("BEGIN");
     const { buyerid, productid } = req.body;
 
     const productdata = await client.query(
@@ -31,16 +30,32 @@ createTransaction = async (req, res) => {
       [buyerid]
     );
 
-    console.log(buyerdata.rows[0], productdata.rows[0]);
+    // console.log(buyerdata.rows[0], productdata.rows[0]);
+    const userwallet = buyerdata.rows[0].wallet;
+    const productprice = productdata.rows[0].price;
 
     if (buyerid != productdata.rows.seller_uuid) {
-      if (buyerdata.rows[0].wallet > productdata.rows[0].price) {
-        const data = await client.query(
-          "INSERT INTO transactions(buyer_id, product_id) VALUES($1, $2)",
+      if (userwallet > productprice) {
+        // const data = await client.query(
+        //   "INSERT INTO transactions(buyer_id, product_id) VALUES($1, $2);\nUPDATE users SET wallet = wallet - $4 WHERE uuid = buyerid;\nUPDATE products SET purchased = true WHERE uuid = productid;",
+        //   [buyerid, productid, userwallet, productprice]
+        // );
+        await client.query("BEGIN");
+        await client.query(
+          "INSERT INTO transactions(buyer_id, product_id) VALUES($1, $2);",
           [buyerid, productid]
         );
 
-        // console.log(data);
+        await client.query(
+          "UPDATE users SET wallet = wallet - $1 WHERE uuid = $2;",
+          [productprice, buyerid]
+        );
+
+        await client.query(
+          "UPDATE products SET purchased = true WHERE uuid = $1;",
+          [productid]
+        );
+
         await client.query("COMMIT");
         res.json({ status: "success", msg: "transaction created" });
       } else {
@@ -55,6 +70,17 @@ createTransaction = async (req, res) => {
     res.status(400).json({ status: "error", msg: "create error" });
   } finally {
     client.release();
+  }
+};
+
+getAllTransactions = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const data = await client.query("SELECT * FROM transactions");
+    res.json(data.rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "fetch error" });
   }
 };
 
@@ -76,5 +102,6 @@ getTransactionsByUserId = async (req, res) => {
 module.exports = {
   purchaseCredits,
   createTransaction,
+  getAllTransactions,
   getTransactionsByUserId,
 };
