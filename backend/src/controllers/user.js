@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 
 const getAllUsers = async (req, res) => {
-  const client = await pool.connect()
+  const client = await pool.connect();
   try {
     const data = await client.query(
       "SELECT * FROM public.users ORDER BY date_joined "
@@ -18,7 +18,7 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const client = await pool.connect()
+  const client = await pool.connect();
   try {
     const { uuid } = req.body;
     const data = await client.query(
@@ -33,7 +33,7 @@ const getUserById = async (req, res) => {
 };
 
 const createUserAccount = async (req, res) => {
-  const client = await pool.connect()
+  const client = await pool.connect();
   try {
     const { email, password, username, role, address, contact } = req.body;
     const hash = await bcrypt.hash(password, 12);
@@ -49,7 +49,7 @@ const createUserAccount = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const client = await pool.connect()
+  const client = await pool.connect();
   try {
     const { email, password } = req.body;
     const auth = await client.query(
@@ -86,31 +86,35 @@ const login = async (req, res) => {
 };
 
 const updateUserById = async (req, res) => {
-  const client = await pool.connect()
+  const client = await pool.connect();
   try {
     const { uuid, username, address, contact } = req.body;
-    const updates = [];
-    const values = [uuid];
-    let query = "UPDATE users SET";
+    if (req.decoded.uuid === uuid) {
+      const updates = [];
+      const values = [uuid];
+      let query = "UPDATE users SET";
 
-    if (username) {
-      values.push(username);
-      updates.push(` username = $${values.length}`);
+      if (username) {
+        values.push(username);
+        updates.push(` username = $${values.length}`);
+      }
+      if (address) {
+        values.push(address);
+        updates.push(` address = $${values.length}`);
+      }
+      if (contact) {
+        values.push(contact);
+        updates.push(` contact = $${values.length}`);
+      }
+
+      query += updates.join(",") + " WHERE uuid = $1 RETURNING *";
+
+      const data = await client.query(query, values);
+
+      res.json({ status: "success", msg: "profile updated" });
+    } else {
+      throw new Error();
     }
-    if (address) {
-      values.push(address);
-      updates.push(` address = $${values.length}`);
-    }
-    if (contact) {
-      values.push(contact);
-      updates.push(` contact = $${values.length}`);
-    }
-
-    query += updates.join(",") + " WHERE uuid = $1 RETURNING *";
-
-    const data = await client.query(query, values);
-
-    res.json({ status: "success", msg: "profile updated" });
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "update error" });
@@ -118,7 +122,7 @@ const updateUserById = async (req, res) => {
 };
 
 const deleteUserById = async (req, res) => {
-  const client = await pool.connect()
+  const client = await pool.connect();
   try {
     const { uuid } = req.body;
     const data = await client.query("DELETE FROM users WHERE uuid = $1", [

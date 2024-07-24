@@ -6,11 +6,11 @@ const {
   getAllTransactions,
   getTransactionsByUserId,
 } = require("../controllers/transaction");
-const { authorizePurchase } = require("../middleware/authorization");
+const { authorizeUser } = require("../middleware/authorization");
 
 router.patch("/credits", purchaseCredits);
-router.put("/purchase", authorizePurchase, createTransaction);
+router.put("/purchase", authorizeUser, createTransaction);
 router.get("/alltrades", getAllTransactions);
-router.get("/tradehistory", getTransactionsByUserId);
+router.get("/tradehistory", authorizeUser, getTransactionsByUserId);
 
 module.exports = router;

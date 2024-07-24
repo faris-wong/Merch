@@ -8,12 +8,16 @@ const {
   updateUserById,
   deleteUserById,
 } = require("../controllers/user");
+const {
+  authorizeUser,
+  authorizeAdmin,
+} = require("../middleware/authorization");
 
 router.get("/users", getAllUsers);
 router.get("/user", getUserById);
 router.put("/register", createUserAccount);
 router.post("/login", login);
-router.patch("/user", updateUserById);
-router.delete("/user", deleteUserById);
+router.patch("/user", authorizeUser, updateUserById);
+router.delete("/user", authorizeAdmin, deleteUserById);
 
 module.exports = router;
