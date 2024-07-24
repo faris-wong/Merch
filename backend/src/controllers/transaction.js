@@ -85,7 +85,7 @@ getTransactionsByUserId = async (req, res) => {
   try {
     const { userid } = req.body;
     const data = await client.query(
-      "SELECT * FROM transactions JOIN products ON transactions.buyer_id = products.uuid WHERE buyer_id = $1 OR seller_uuid = $1 ORDER BY date_transacted",
+      "SELECT * FROM transactions JOIN products ON transactions.product_id = products.uuid WHERE buyer_id = $1 OR seller_uuid = $1 ORDER BY date_transacted",
       [userid]
     );
     res.json(data.rows);
