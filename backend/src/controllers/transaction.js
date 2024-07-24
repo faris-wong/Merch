@@ -30,11 +30,11 @@ createTransaction = async (req, res) => {
       [buyerid]
     );
 
-    // console.log(buyerdata.rows[0], productdata.rows[0]);
+    console.log(buyerid, productdata.rows[0]);
     const userwallet = buyerdata.rows[0].wallet;
     const productprice = productdata.rows[0].price;
 
-    if (buyerid != productdata.rows.seller_uuid) {
+    if (buyerid != productdata.rows[0].seller_uuid) {
       if (userwallet > productprice) {
         // const data = await client.query(
         //   "INSERT INTO transactions(buyer_id, product_id) VALUES($1, $2);\nUPDATE users SET wallet = wallet - $4 WHERE uuid = buyerid;\nUPDATE products SET purchased = true WHERE uuid = productid;",
