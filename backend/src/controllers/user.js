@@ -87,34 +87,32 @@ const login = async (req, res) => {
 
 const updateUserById = async (req, res) => {
   const client = await pool.connect();
+
   try {
-    const { uuid, username, address, contact } = req.body;
-    if (req.decoded.uuid === uuid) {
-      const updates = [];
-      const values = [uuid];
-      let query = "UPDATE users SET";
+    const { username, address, contact } = req.body;
 
-      if (username) {
-        values.push(username);
-        updates.push(` username = $${values.length}`);
-      }
-      if (address) {
-        values.push(address);
-        updates.push(` address = $${values.length}`);
-      }
-      if (contact) {
-        values.push(contact);
-        updates.push(` contact = $${values.length}`);
-      }
+    const updates = [];
+    const values = [req.decoded.uuid];
+    let query = "UPDATE users SET";
 
-      query += updates.join(",") + " WHERE uuid = $1 RETURNING *";
-
-      const data = await client.query(query, values);
-
-      res.json({ status: "success", msg: "profile updated" });
-    } else {
-      throw new Error();
+    if (username) {
+      values.push(username);
+      updates.push(` username = $${values.length}`);
     }
+    if (address) {
+      values.push(address);
+      updates.push(` address = $${values.length}`);
+    }
+    if (contact) {
+      values.push(contact);
+      updates.push(` contact = $${values.length}`);
+    }
+
+    query += updates.join(",") + " WHERE uuid = $1 RETURNING *";
+
+    const data = await client.query(query, values);
+
+    res.json({ status: "success", msg: "profile updated" });
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "update error" });
