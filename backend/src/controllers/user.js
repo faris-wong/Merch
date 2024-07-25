@@ -78,7 +78,7 @@ const login = async (req, res) => {
       expiresIn: "30d",
       jwtid: uuidv4(),
     });
-    res.json({ uuid: user.uuid, access, refresh });
+    res.json({ uuid: user.uuid, role: user.role, access, refresh });
   } catch (error) {
     console.error(error.message);
     res.json({ status: "error", msg: "unable to login" });
