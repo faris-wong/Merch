@@ -12,9 +12,9 @@ const { authorizeUser } = require("../middleware/authorization");
 
 router.get("/products", getAllProducts);
 router.get("/listings", getAllProductsForSale);
-router.get("/listingbyuser", getAllProductListingsBySellerId);
-router.put("/product",authorizeUser, createProduct);
-router.delete("/product",authorizeUser, deleteProductById);
-router.patch("/product",authorizeUser, updateProductById);
+router.get("/listingbyuser", authorizeUser, getAllProductListingsBySellerId);
+router.put("/product", authorizeUser, createProduct);
+router.delete("/product", authorizeUser, deleteProductById);
+router.patch("/product", authorizeUser, updateProductById);
 
 module.exports = router;

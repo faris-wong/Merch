@@ -30,10 +30,9 @@ getAllProductsForSale = async (req, res) => {
 getAllProductListingsBySellerId = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { sellerid } = req.body;
     const data = await client.query(
       "SELECT * FROM public.products WHERE seller_uuid = $1 AND purchased = false ORDER BY date_listed",
-      [sellerid]
+      [req.decoded.uuid]
     );
     res.json(data.rows);
   } catch (error) {

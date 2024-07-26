@@ -7,28 +7,28 @@ import {
 } from "@tanstack/react-query";
 import ReactDOM from "react-dom";
 import UserContext from "../context/user";
-import styles from "./css/UpdateUserCard.module.css";
+import styles from "./css/CreateList.module.css";
 import useFetch from "../hooks/useFetch";
 
 const Overlay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
-  const [updateUser, setUpdateUser] = useState({
-    username: "",
-    address: "",
-    contact: "",
+  const [createList, setCreateList] = useState({
+    productname: "",
+    description: "",
+    price: "",
   });
 
   const { mutate } = useMutation({
     mutationFn: async (formData) => {
-      const { username, address, contact } = formData;
+      const { productname, description, price } = formData;
       return await usingFetch(
-        "/user",
-        "PATCH",
+        "/product",
+        "PUT",
         {
-          username,
-          address,
-          contact,
+          productname,
+          description,
+          price,
         },
         userCtx.accessToken
       );
@@ -36,8 +36,8 @@ const Overlay = (props) => {
   });
 
   const handleSubmit = () => {
-    mutate(updateUser);
-    props.setShowUpdateUser(false);
+    mutate(createList);
+    props.setShowCreateListing(false);
   };
 
   return (
@@ -45,57 +45,58 @@ const Overlay = (props) => {
       <div className={styles.backdrop}>
         <div className={styles.modal}>
           <div>
-            <div>Update Profile</div>
+            <div>Create Listing</div>
 
             <div>
-              Username:
+              Product Name:
               <input
                 onChange={(e) =>
-                  setUpdateUser({ ...updateUser, username: e.target.value })
+                  setCreateList({ ...createList, productname: e.target.value })
                 }
-                value={updateUser.username}
+                value={createList.productname}
                 type="text"
               ></input>
             </div>
             <div>
-              Address:
+              Description:
               <input
                 onChange={(e) =>
-                  setUpdateUser({ ...updateUser, address: e.target.value })
+                  setCreateList({ ...createList, description: e.target.value })
                 }
-                value={updateUser.address}
+                value={createList.description}
                 type="text"
               ></input>
             </div>
             <div>
-              Contact:
+              Price:
               <input
                 onChange={(e) =>
-                  setUpdateUser({ ...updateUser, contact: e.target.value })
+                  setCreateList({ ...createList, price: e.target.value })
                 }
-                value={updateUser.contact}
-                type="text"
+                value={createList.price}
+                type="number"
               ></input>
             </div>
             <button onClick={handleSubmit}>Submit</button>
           </div>
-
-          <button onClick={() => props.setShowUpdateUser(false)}>close</button>
+          <button onClick={() => props.setShowCreateListing(false)}>
+            close
+          </button>
         </div>
       </div>
     </>
   );
 };
 
-const Register = (props) => {
+const CreateList = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <Overlay setShowUpdateUser={props.setShowUpdateUser} />,
+        <Overlay setShowCreateListing={props.setShowCreateListing} />,
         document.querySelector("#modal-root")
       )}
     </>
   );
 };
 
-export default Register;
+export default CreateList;

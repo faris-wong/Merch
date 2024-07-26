@@ -16,7 +16,7 @@ const UserCard = () => {
     isError,
     error,
     data: profiledata,
-    refetch: fetchprofile,
+    refetch: refetchprofiledata,
   } = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
