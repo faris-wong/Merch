@@ -5,7 +5,7 @@ getAllProducts = async (req, res) => {
   const client = await pool.connect();
   try {
     const data = await client.query(
-      "SELECT * FROM public.products ORDER BY date_listed "
+      "SELECT * FROM public.products ORDER BY date_listed DESC"
     );
     res.json(data.rows);
   } catch (error) {
@@ -18,7 +18,7 @@ getAllProductsForSale = async (req, res) => {
   const client = await pool.connect();
   try {
     const data = await client.query(
-      "SELECT * FROM public.products WHERE purchased = false ORDER BY date_listed "
+      "SELECT * FROM public.products WHERE purchased = false ORDER BY date_listed DESC"
     );
     res.json(data.rows);
   } catch (error) {

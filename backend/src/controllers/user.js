@@ -20,10 +20,9 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { uuid } = req.body;
     const data = await client.query(
       "SELECT * FROM public.users WHERE uuid = $1 LIMIT 1",
-      [uuid]
+      [req.decoded.uuid]
     );
     res.json(data.rows);
   } catch (error) {

@@ -14,7 +14,7 @@ const {
 } = require("../middleware/authorization");
 
 router.get("/users", getAllUsers);
-router.get("/user", getUserById);
+router.get("/user", authorizeUser, getUserById);
 router.put("/register", createUserAccount);
 router.post("/login", login);
 router.patch("/user", authorizeUser, updateUserById);

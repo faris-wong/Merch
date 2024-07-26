@@ -27,7 +27,7 @@ const Login = () => {
         throw error.message;
       }
     },
-    enabled: false,
+    // enabled: false,
   });
 
   useEffect(() => {
@@ -40,6 +40,7 @@ const Login = () => {
     }
   }, [data]);
   console.log(data);
+  console.log(email, password);
   return (
     <>
       <div className={styles.login}>

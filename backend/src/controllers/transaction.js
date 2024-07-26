@@ -19,7 +19,7 @@ purchaseCredits = async (req, res) => {
 createTransaction = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { buyerid, productid } = req.body;
+    const { productid } = req.body;
 
     const productdata = await client.query(
       "SELECT products.price, products.seller_uuid FROM products WHERE products.uuid = $1",
@@ -33,16 +33,16 @@ createTransaction = async (req, res) => {
     const productprice = parseInt(productdata.rows[0].price);
     const sellerid = productdata.rows[0].seller_uuid;
     // console.log(typeof(userwallet), typeof(productprice), sellerid);
-    if (buyerid != sellerid) {
+    if (req.decoded.uuid != sellerid) {
       if (userwallet >= productprice) {
         await client.query("BEGIN");
         await client.query(
           "INSERT INTO transactions(buyer_id, product_id) VALUES($1, $2);",
-          [buyerid, productid]
+          [req.decoded.uuid, productid]
         );
         await client.query(
           "UPDATE users SET wallet = wallet - $1 WHERE uuid = $2;",
-          [productprice, buyerid]
+          [productprice, req.decoded.uuid]
         );
         await client.query(
           "UPDATE users SET wallet = wallet + $1 WHERE uuid = $2;",
@@ -63,7 +63,7 @@ createTransaction = async (req, res) => {
   } catch (error) {
     await client.query("ROLLBACK");
     console.error(error.message);
-    res.status(400).json({ status: "error", msg: "create error" });
+    res.status(400).json({ status: "error", msg: "purchase error" });
   } finally {
     client.release();
   }
@@ -83,10 +83,9 @@ getAllTransactions = async (req, res) => {
 getTransactionsByUserId = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { userid } = req.body;
     const data = await client.query(
-      "SELECT * FROM transactions JOIN products ON transactions.product_id = products.uuid WHERE buyer_id = $1 OR seller_uuid = $1 ORDER BY date_transacted",
-      [userid]
+      "SELECT * FROM transactions JOIN products ON transactions.product_id = products.uuid WHERE buyer_id = $1 OR seller_uuid = $1 ORDER BY date_transacted DESC",
+      [req.decoded.uuid]
     );
     res.json(data.rows);
   } catch (error) {
