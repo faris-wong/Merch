@@ -4,10 +4,10 @@ const { pool } = require("../database/database");
 purchaseCredits = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { userid, value } = req.body;
+    const { value } = req.body;
     const data = await client.query(
       "UPDATE users SET wallet = wallet + $2 WHERE uuid = $1 RETURNING *",
-      [userid, value]
+      [req.decoded.uuid, value]
     );
     res.json({ status: "success", msg: "successful purchase of credits" });
   } catch (error) {
@@ -27,7 +27,7 @@ createTransaction = async (req, res) => {
     );
     const buyerdata = await client.query(
       "SELECT users.wallet FROM users WHERE users.uuid = $1",
-      [buyerid]
+      [req.decoded.uuid]
     );
     const userwallet = parseInt(buyerdata.rows[0].wallet);
     const productprice = parseInt(productdata.rows[0].price);

@@ -8,7 +8,7 @@ const {
 } = require("../controllers/transaction");
 const { authorizeUser } = require("../middleware/authorization");
 
-router.patch("/credits", purchaseCredits);
+router.patch("/credits", authorizeUser, purchaseCredits);
 router.put("/purchase", authorizeUser, createTransaction);
 router.get("/alltrades", getAllTransactions);
 router.get("/tradehistory", authorizeUser, getTransactionsByUserId);
