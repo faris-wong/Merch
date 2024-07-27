@@ -13,6 +13,8 @@ purchaseCredits = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "purchase credits error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -77,6 +79,8 @@ getAllTransactions = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -91,6 +95,8 @@ getTransactionsByUserId = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
   }
 };
 

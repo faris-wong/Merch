@@ -1,35 +1,38 @@
-import React, { useState, useContext } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import UserContext from "../context/user";
-import useFetch from "../hooks/useFetch";
+import React, { useState } from "react";
+import styles from "./css/SellCard.module.css";
+import UpdateList from "./UpdateList";
+import DeleteList from "./DeleteList";
 
 const SellCard = (props) => {
-  const usingFetch = useFetch();
-  const userCtx = useContext(UserContext);
-  const { mutate } = useMutation({
-    mutationFn: async (productid) => {
-      return await usingFetch(
-        "/product",
-        "DELETE",
-        {
-          productid,
-        },
-        userCtx.accessToken
-      );
-    },
-  });
+  const [showUpdateList, setShowUpdateList] = useState(false);
+  const [showDeleteList, setShowDeleteList] = useState(false);
 
-  const handleDelete = () => {
-    mutate(props.list.uuid);
-  };
   return (
     <>
-      <div>
-        {props.list.product_name}
-        {props.list.description}
-        {props.list.price}
-        <button>update</button>
-        <button onClick={handleDelete}>delete</button>
+      <div className={styles.list}>
+        <span className={styles.listname}>{props.list.product_name}</span>
+        <span className={styles.listdesc}>{props.list.description}</span>
+        <span className={styles.listprice}>{props.list.price}</span>
+        <span className={styles.button}>
+          <span>
+            <button onClick={() => setShowUpdateList(true)}>Update</button>
+          </span>
+          {showUpdateList && (
+            <UpdateList
+              setShowUpdateList={setShowUpdateList}
+              list={props.list}
+            ></UpdateList>
+          )}
+          <span>
+            <button onClick={() => setShowDeleteList(true)}>Delete</button>
+          </span>
+        </span>
+        {showDeleteList && (
+          <DeleteList
+            setShowDeleteList={setShowDeleteList}
+            list={props.list}
+          ></DeleteList>
+        )}
       </div>
     </>
   );

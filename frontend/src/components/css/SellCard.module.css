@@ -1,0 +1,17 @@
+.list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.listname {
+}
+
+.listdesc {
+}
+
+.listprice {
+}
+
+.button {
+  align-self: flex-end;
+}

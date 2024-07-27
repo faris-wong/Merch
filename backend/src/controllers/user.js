@@ -14,6 +14,8 @@ const getAllUsers = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -28,6 +30,8 @@ const getUserById = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -44,6 +48,8 @@ const createUserAccount = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "create error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -81,6 +87,8 @@ const login = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.json({ status: "error", msg: "unable to login" });
+  } finally {
+    client.release();
   }
 };
 
@@ -115,6 +123,8 @@ const updateUserById = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "update error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -129,6 +139,8 @@ const deleteUserById = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "update error" });
+  } finally {
+    client.release();
   }
 };
 

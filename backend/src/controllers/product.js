@@ -11,6 +11,8 @@ getAllProducts = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -24,6 +26,8 @@ getAllProductsForSale = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -38,6 +42,8 @@ getAllProductListingsBySellerId = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -54,6 +60,8 @@ createProduct = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "create error" });
+  } finally {
+    client.release();
   }
 };
 
@@ -69,15 +77,17 @@ deleteProductById = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "delete error" });
+  } finally {
+    client.release();
   }
 };
 
 updateProductById = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { uuid, productname, description, price } = req.body;
+    const { productid, productname, description, price } = req.body;
     const updates = [];
-    const values = [uuid, req.decoded.uuid];
+    const values = [productid, req.decoded.uuid];
     let query = "UPDATE products SET";
 
     if (productname) {
@@ -101,6 +111,8 @@ updateProductById = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "update error" });
+  } finally {
+    client.release();
   }
 };
 
