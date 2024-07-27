@@ -36,6 +36,7 @@ const Login = () => {
       const decoded = jwtDecode(data.access);
       userCtx.setUUID(decoded.uuid);
       userCtx.setRole(decoded.role);
+      userCtx.setUsername(decoded.username);
       navigate("/"); // change to be able to access login page even after logged in
     }
   }, [data]);

@@ -36,9 +36,10 @@ const Sell = () => {
   if (isLoading) {
     return "isLoading";
   }
-  console.log(listdata);
+
   return (
     <>
+      <div>All {userCtx.username}'s' Listings</div>
       {listdata.map((list) => (
         <SellCard list={list}></SellCard>
       ))}

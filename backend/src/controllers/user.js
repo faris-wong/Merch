@@ -71,7 +71,7 @@ const login = async (req, res) => {
       return res.status(401).json({ status: "error", msg: "wrong password" });
     }
     const claims = {
-      email: user.email,
+      username: user.username,
       role: user.role,
       uuid: user.uuid,
     };
@@ -83,7 +83,13 @@ const login = async (req, res) => {
       expiresIn: "30d",
       jwtid: uuidv4(),
     });
-    res.json({ uuid: user.uuid, role: user.role, access, refresh });
+    res.json({
+      username: user.username,
+      uuid: user.uuid,
+      role: user.role,
+      access,
+      refresh,
+    });
   } catch (error) {
     console.error(error.message);
     res.json({ status: "error", msg: "unable to login" });

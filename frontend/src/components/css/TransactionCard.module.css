@@ -1,6 +1,15 @@
-.green {
-  color: green;
+.bought {
+  color: black;
+  background-color: rgb(181, 181, 170);
+  list-style: none;
+  border: 1px solid black;
+  border-radius: 100px;
+
 }
-.red {
-  color: red;
+.sold {
+  color: black;
+  background-color: rgb(118, 112, 112);
+  list-style: none;
+  border: 1px solid black;
+  border-radius: 100px;
 }

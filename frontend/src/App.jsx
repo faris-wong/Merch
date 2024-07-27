@@ -16,17 +16,30 @@ function App() {
   const [accessToken, setAccessToken] = useState("");
   const [uuid, setUUID] = useState("");
   const [role, setRole] = useState("");
+  const [username, setUsername] = useState("");
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <UserContext.Provider
-          value={{ accessToken, setAccessToken, uuid, setUUID, role, setRole }}
+          value={{
+            accessToken,
+            setAccessToken,
+            uuid,
+            setUUID,
+            role,
+            setRole,
+            username,
+            setUsername,
+          }}
         >
           <Navbar></Navbar>
           <Suspense fallback={<p>Loading...</p>}>
             <Routes>
               <Route path="/" element={<Home></Home>}></Route>
-              <Route path="/profile" element={<Profile></Profile>}></Route>
+              <Route
+                path="/profile"
+                element={<Profile></Profile>}
+              ></Route>
               <Route path="/buy" element={<Buy></Buy>}></Route>
               <Route path="/sell" element={<Sell></Sell>}></Route>
               <Route path="/credits" element={<Credits></Credits>}></Route>

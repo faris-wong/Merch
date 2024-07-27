@@ -1,38 +1,29 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
+import styles from "./css/Profile.module.css";
 import UserCard from "./UserCard";
 import TransactionCard from "./TransactionCard";
 
 const Profile = () => {
-  //   const usingFetch = useFetch();
-  //   const userCtx = useContext(UserContext);
-
-  //   const {
-  //     isLoading,
-  //     isError,
-  //     error,
-  //     data: profiledata,
-  //     refetch: fetchprofile,
-  //   } = useQuery({
-  //     queryKey: ["profile"],
-  //     queryFn: async () => {
-  //       try {
-  //         return await usingFetch("/user", "GET", undefined, userCtx.accessToken);
-  //       } catch (error) {
-  //         throw error.message;
-  //       }
-  //     },
-  //     enabled: true,
-  //   });
-
-  //   if (isLoading) {
-  //     return "isLoading";
-  //   }
-
+  const formatDate = (date) => {
+    const datetime = new Date(date);
+    return datetime.toLocaleString("en-GB", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: false,
+    });
+  };
   return (
-    <>
-      <UserCard></UserCard>
-      <TransactionCard></TransactionCard>
-    </>
+    <div className={styles.profile}>
+      <div className={styles.user}>
+        <UserCard formatDate={formatDate}></UserCard>
+      </div>
+      <div className={styles.history}>
+        <TransactionCard formatDate={formatDate}></TransactionCard>
+      </div>
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import useFetch from "../hooks/useFetch";
 import styles from "./css/TransactionCard.module.css";
 
-const TransactionCard = () => {
+const TransactionCard = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
 
@@ -39,18 +39,17 @@ const TransactionCard = () => {
     <>
       <div>
         <div>Transaction History</div>
+        <div></div>
         {transactiondata.map((transaction) =>
           transaction.buyer_id === userCtx.uuid ? (
-            <li className={styles.green}>
-              {transaction.product_name} bought for: {transaction.price} date:
-              {transaction.date_transacted}
-              {transaction.date_transacted}
+            <li className={styles.bought}>
+              {transaction.product_name} bought for: {transaction.price} date:{" "}
+              {props.formatDate(transaction.date_transacted)}
             </li>
           ) : (
-            <li className={styles.red}>
-              {transaction.product_name} sold for: {transaction.price} date:
-              {transaction.date_transacted}
-              {transaction.date_transacted}
+            <li className={styles.sold}>
+              {transaction.product_name} sold for: {transaction.price} date:{" "}
+              {props.formatDate(transaction.date_transacted)}
             </li>
           )
         )}

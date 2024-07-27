@@ -34,7 +34,8 @@ const Buy = () => {
     return "isLoading";
   }
 
-  console.log(forsaledata);
+ 
+
   return (
     <>
       {forsaledata.map((forsale) => (

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import UpdateUserCard from "./UpdateUserCard";
 
-const UserCard = () => {
+const UserCard = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const [showUpdateUser, setShowUpdateUser] = useState(false);
@@ -41,7 +41,7 @@ const UserCard = () => {
       <div>Contact: {profiledata[0].contact}</div>
       <div>Address: {profiledata[0].address}</div>
       <div>Wallet: {profiledata[0].wallet} credits</div>
-      <div>Date joined: {profiledata[0].date_joined}</div>
+      <div>Date joined: {props.formatDate(profiledata[0].date_joined)}</div>
       <button onClick={() => setShowUpdateUser(true)}>update</button>
       {showUpdateUser && (
         <UpdateUserCard setShowUpdateUser={setShowUpdateUser}></UpdateUserCard>
