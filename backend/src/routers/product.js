@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   getAllProducts,
   getAllProductsForSale,
+  getAllProductsForSaleForUser,
   getAllProductListingsBySellerId,
   createProduct,
   deleteProductById,
@@ -12,6 +13,7 @@ const { authorizeUser } = require("../middleware/authorization");
 
 router.get("/products", getAllProducts);
 router.get("/listings", getAllProductsForSale);
+router.get("/listingsforuser", authorizeUser, getAllProductsForSaleForUser);
 router.get("/listingbyuser", authorizeUser, getAllProductListingsBySellerId);
 router.put("/product", authorizeUser, createProduct);
 router.delete("/product", authorizeUser, deleteProductById);

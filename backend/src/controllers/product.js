@@ -31,6 +31,22 @@ getAllProductsForSale = async (req, res) => {
   }
 };
 
+getAllProductsForSaleForUser = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const data = await client.query(
+      "SELECT * FROM public.products WHERE seller_uuid != $1 AND purchased = false ORDER BY date_listed DESC",
+      [req.decoded.uuid]
+    );
+    res.json(data.rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
+  }
+};
+
 getAllProductListingsBySellerId = async (req, res) => {
   const client = await pool.connect();
   try {
@@ -119,6 +135,7 @@ updateProductById = async (req, res) => {
 module.exports = {
   getAllProducts,
   getAllProductsForSale,
+  getAllProductsForSaleForUser,
   getAllProductListingsBySellerId,
   createProduct,
   deleteProductById,

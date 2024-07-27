@@ -34,7 +34,7 @@ createTransaction = async (req, res) => {
     const userwallet = parseInt(buyerdata.rows[0].wallet);
     const productprice = parseInt(productdata.rows[0].price);
     const sellerid = productdata.rows[0].seller_uuid;
-    // console.log(typeof(userwallet), typeof(productprice), sellerid);
+
     if (req.decoded.uuid != sellerid) {
       if (userwallet >= productprice) {
         await client.query("BEGIN");
