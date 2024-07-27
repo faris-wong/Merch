@@ -13,6 +13,7 @@ import useFetch from "../hooks/useFetch";
 const Overlay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
+  const queryClient = useQueryClient();
   const [createList, setCreateList] = useState({
     productname: "",
     description: "",
@@ -32,6 +33,9 @@ const Overlay = (props) => {
         },
         userCtx.accessToken
       );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["list"] });
     },
   });
 

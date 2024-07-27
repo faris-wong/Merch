@@ -38,6 +38,7 @@ const TransactionCard = () => {
   return (
     <>
       <div>
+        <div>Transaction History</div>
         {transactiondata.map((transaction) =>
           transaction.buyer_id === userCtx.uuid ? (
             <li className={styles.green}>

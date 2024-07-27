@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
 import ReactDOM from "react-dom";
@@ -8,6 +8,7 @@ import styles from "./css/DeleteList.module.css";
 const Overlay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: async (productid) => {
       return await usingFetch(
@@ -18,6 +19,9 @@ const Overlay = (props) => {
         },
         userCtx.accessToken
       );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["list"] });
     },
   });
 

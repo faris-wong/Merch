@@ -1,10 +1,5 @@
 import React, { useState, useContext } from "react";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ReactDOM from "react-dom";
 import UserContext from "../context/user";
 import styles from "./css/UpdateUserCard.module.css";
@@ -13,6 +8,7 @@ import useFetch from "../hooks/useFetch";
 const Overlay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
+  const queryClient = useQueryClient();
   const [updateUser, setUpdateUser] = useState({
     username: "",
     address: "",
@@ -32,6 +28,9 @@ const Overlay = (props) => {
         },
         userCtx.accessToken
       );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
   });
 
