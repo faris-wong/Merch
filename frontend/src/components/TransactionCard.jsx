@@ -35,7 +35,7 @@ const TransactionCard = (props) => {
   if (isLoading) {
     return "isLoading";
   }
-  
+
   return (
     <>
       <div>

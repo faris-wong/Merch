@@ -21,13 +21,14 @@ const Overlay = (props) => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["search"] });
+      queryClient.invalidateQueries({ queryKey: ["forsale"] });
       queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
   });
 
   const handleBuy = () => {
     mutate(props.forsale.uuid);
+    console.log(props.forsale);
     props.setShowBuyModal(false);
   };
   return (

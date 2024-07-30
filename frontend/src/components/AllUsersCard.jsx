@@ -27,10 +27,24 @@ const AllUsersCard = (props) => {
     mutate(props.users["uuid"]);
   };
 
+  const formatDate = (date) => {
+    const datetime = new Date(date);
+    return datetime.toLocaleString("en-GB", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: false,
+    });
+  };
+
   return (
     <div>
       <span>{props.users["username"]} </span>
       <span>{props.users["wallet"]} </span>
+      <span>{props.users["contact"]} </span>
+      <span>{formatDate(props.users["date_joined"])} </span>
       {props.users["role"] === "USER" && (
         <span>
           <button onClick={handleDelete}>delete</button>

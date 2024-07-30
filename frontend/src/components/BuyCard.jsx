@@ -10,6 +10,7 @@ const BuyCard = (props) => {
       <div className={styles.list}>
         <div className={styles.overlay}>{props.forsale.description}</div>
         <span className={styles}>{props.forsale.product_name}</span>
+        <span className={styles}>{props.forsale.username}</span>
         <span className={styles}>{props.forsale.price}</span>
         <span>
           <button onClick={() => setShowBuyModal(true)}>Buy</button>

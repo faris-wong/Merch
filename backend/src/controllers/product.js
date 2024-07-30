@@ -1,36 +1,35 @@
 const express = require("express");
 const { pool } = require("../database/database");
 
-getAllProducts = async (req, res) => {
-  const client = await pool.connect();
-  try {
-    const data = await client.query(
-      "SELECT * FROM public.products ORDER BY date_listed DESC"
-    );
-    res.json(data.rows);
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ status: "error", msg: "fetch error" });
-  } finally {
-    client.release();
-  }
-};
+// getAllProducts = async (req, res) => {
+//   const client = await pool.connect();
+//   try {
+//     const data = await client.query(
+//       "SELECT * FROM public.products ORDER BY date_listed DESC"
+//     );
+//     res.json(data.rows);
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(400).json({ status: "error", msg: "fetch error" });
+//   } finally {
+//     client.release();
+//   }
+// };
 
-getAllProductsForSale = async (req, res) => {
-  const client = await pool.connect();
-  try {
-    const data = await client.query(
-      "SELECT * FROM public.products WHERE purchased = false ORDER BY date_listed DESC"
-    );
-    res.json(data.rows);
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ status: "error", msg: "fetch error" });
-  } finally {
-    client.release();
-  }
-};
-
+// getAllProductsForSale = async (req, res) => {
+//   const client = await pool.connect();
+//   try {
+//     const data = await client.query(
+//       "SELECT * FROM public.products WHERE purchased = false ORDER BY date_listed DESC"
+//     );
+//     res.json(data.rows);
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(400).json({ status: "error", msg: "fetch error" });
+//   } finally {
+//     client.release();
+//   }
+// };
 
 searchAllProducts = async (req, res) => {
   const client = await pool.connect();
@@ -65,13 +64,12 @@ getAllProductsForSaleForUser = async (req, res) => {
   }
 };
 
-
 searchAllProductsForUser = async (req, res) => {
   const client = await pool.connect();
   try {
     const { search } = req.body;
     const data = await client.query(
-      "SELECT * FROM public.products WHERE seller_uuid != $1 AND purchased = false AND product_name LIKE $2 ORDER BY date_listed DESC",
+      "SELECT products.uuid, products.product_name, products.description, products.price, products.date_listed, products.seller_uuid, products.purchased, users.username FROM products JOIN users ON products.seller_uuid = users.uuid WHERE seller_uuid != $1 AND	products.purchased = false AND products.product_name LIKE $2 ORDER BY products.date_listed DESC",
       [req.decoded.uuid, `%${search}%`]
     );
     res.json(data.rows);
@@ -169,8 +167,6 @@ updateProductById = async (req, res) => {
 };
 
 module.exports = {
-  getAllProducts,
-  getAllProductsForSale,
   searchAllProducts,
   getAllProductsForSaleForUser,
   searchAllProductsForUser,

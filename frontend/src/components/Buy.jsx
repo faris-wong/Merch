@@ -13,10 +13,10 @@ const Buy = () => {
   const {
     isError,
     error,
-    data: searchdata,
+    data: forsale,
   } = useQuery({
     initialData: [],
-    queryKey: ["searchbyuser", search],
+    queryKey: ["forsale", search],
     queryFn: async () => {
       try {
         return await usingFetch(
@@ -59,7 +59,7 @@ const Buy = () => {
           <span>Wallet: {profiledata[0].wallet} credits</span>
         )}
       </div>
-      {searchdata.map((forsale) => (
+      {forsale.map((forsale) => (
         <BuyCard forsale={forsale}></BuyCard>
       ))}
     </>

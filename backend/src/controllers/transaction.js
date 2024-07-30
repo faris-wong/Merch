@@ -33,6 +33,7 @@ createTransaction = async (req, res) => {
     );
     const userwallet = parseInt(buyerdata.rows[0].wallet);
     const productprice = parseInt(productdata.rows[0].price);
+
     const sellerid = productdata.rows[0].seller_uuid;
 
     if (req.decoded.uuid != sellerid) {
@@ -65,7 +66,9 @@ createTransaction = async (req, res) => {
   } catch (error) {
     await client.query("ROLLBACK");
     console.error(error.message);
-    res.status(400).json({ status: "error", msg: "purchase error" });
+    res
+      .status(400)
+      .json({ status: "error", msg: "purchase error"});
   } finally {
     client.release();
   }
