@@ -18,6 +18,7 @@ const UserCard = (props) => {
     data: profiledata,
     refetch: refetchprofiledata,
   } = useQuery({
+    initialData: ["x"],
     queryKey: ["profile"],
     queryFn: async () => {
       try {

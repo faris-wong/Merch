@@ -13,7 +13,7 @@ const {
   authorizeAdmin,
 } = require("../middleware/authorization");
 
-router.get("/users", getAllUsers);
+router.get("/users", authorizeAdmin, getAllUsers);
 router.get("/user", authorizeUser, getUserById);
 router.put("/register", createUserAccount);
 router.post("/login", login);

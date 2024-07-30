@@ -15,6 +15,7 @@ const TransactionCard = (props) => {
     data: transactiondata,
     refetch: fetchtransaction,
   } = useQuery({
+    initialData: [],
     queryKey: ["transaction"],
     queryFn: async () => {
       try {
@@ -34,7 +35,7 @@ const TransactionCard = (props) => {
   if (isLoading) {
     return "isLoading";
   }
-  console.log(transactiondata);
+  
   return (
     <>
       <div>

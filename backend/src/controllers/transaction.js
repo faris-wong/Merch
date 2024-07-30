@@ -57,7 +57,7 @@ createTransaction = async (req, res) => {
         await client.query("COMMIT");
         res.json({ status: "success", msg: "transaction created" });
       } else {
-        res.json({ msg: "not enough credits" });
+        res.status(400).json({ msg: "not enough credits" });
       }
     } else {
       res.json({ msg: "can't buy your own goods" });

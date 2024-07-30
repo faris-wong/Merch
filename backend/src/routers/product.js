@@ -3,7 +3,9 @@ const router = express.Router();
 const {
   getAllProducts,
   getAllProductsForSale,
+  searchAllProducts,
   getAllProductsForSaleForUser,
+  searchAllProductsForUser,
   getAllProductListingsBySellerId,
   createProduct,
   deleteProductById,
@@ -13,7 +15,9 @@ const { authorizeUser } = require("../middleware/authorization");
 
 router.get("/products", getAllProducts);
 router.get("/listings", getAllProductsForSale);
+router.post("/search", searchAllProducts);
 router.get("/listingsforuser", authorizeUser, getAllProductsForSaleForUser);
+router.post("/searchbyuser", authorizeUser, searchAllProductsForUser);
 router.get("/listingbyuser", authorizeUser, getAllProductListingsBySellerId);
 router.put("/product", authorizeUser, createProduct);
 router.delete("/product", authorizeUser, deleteProductById);

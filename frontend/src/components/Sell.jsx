@@ -17,6 +17,7 @@ const Sell = () => {
     data: listdata,
     refetch: refetchlistdata,
   } = useQuery({
+    initialData: [],
     queryKey: ["list"],
     queryFn: async () => {
       try {

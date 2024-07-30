@@ -3,11 +3,18 @@
 .user {
   width: 30%;
   float: left;
-  padding:30px;
+  padding: 30px;
   border: 1px solid black;
 }
 
 .history {
+  width: 70%;
+  float: right;
+  padding: 30px;
+  border: 1px solid black;
+}
+
+.userprofiles {
   width: 70%;
   float: right;
   padding: 30px;

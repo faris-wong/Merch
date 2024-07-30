@@ -2,9 +2,9 @@ import React, { useState, useContext } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
-import BuyCard from "./BuyCard";
+import BuyCardLogout from "./BuyCardLogout";
 
-const Buy = () => {
+const BuyLogout = () => {
   const queryClient = useQueryClient();
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
@@ -16,28 +16,10 @@ const Buy = () => {
     data: searchdata,
   } = useQuery({
     initialData: [],
-    queryKey: ["searchbyuser", search],
+    queryKey: ["search", search],
     queryFn: async () => {
       try {
-        return await usingFetch(
-          "/searchbyuser",
-          "POST",
-          { search: search },
-          userCtx.accessToken
-        );
-      } catch (error) {
-        throw error.message;
-      }
-    },
-    enabled: true,
-  });
-
-  const { data: profiledata, refetch: refetchprofiledata } = useQuery({
-    initialData: ["x"],
-    queryKey: ["profile"],
-    queryFn: async () => {
-      try {
-        return await usingFetch("/user", "GET", undefined, userCtx.accessToken);
+        return await usingFetch("/search", "POST", { search: search });
       } catch (error) {
         throw error.message;
       }
@@ -55,15 +37,12 @@ const Buy = () => {
             setSearch(e.target.value);
           }}
         ></input>
-        {userCtx.accessToken && (
-          <span>Wallet: {profiledata[0].wallet} credits</span>
-        )}
       </div>
       {searchdata.map((forsale) => (
-        <BuyCard forsale={forsale}></BuyCard>
+        <BuyCardLogout forsale={forsale}></BuyCardLogout>
       ))}
     </>
   );
 };
 
-export default Buy;
+export default BuyLogout;

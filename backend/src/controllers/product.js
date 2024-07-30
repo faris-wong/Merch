@@ -31,12 +31,48 @@ getAllProductsForSale = async (req, res) => {
   }
 };
 
+
+searchAllProducts = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { search } = req.body;
+    const data = await client.query(
+      "SELECT * FROM public.products WHERE purchased = false AND product_name LIKE $1 ORDER BY date_listed DESC",
+      [`%${search}%`]
+    );
+    res.json(data.rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
+  }
+};
+
 getAllProductsForSaleForUser = async (req, res) => {
   const client = await pool.connect();
   try {
     const data = await client.query(
       "SELECT * FROM public.products WHERE seller_uuid != $1 AND purchased = false ORDER BY date_listed DESC",
       [req.decoded.uuid]
+    );
+    res.json(data.rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "fetch error" });
+  } finally {
+    client.release();
+  }
+};
+
+
+searchAllProductsForUser = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { search } = req.body;
+    const data = await client.query(
+      "SELECT * FROM public.products WHERE seller_uuid != $1 AND purchased = false AND product_name LIKE $2 ORDER BY date_listed DESC",
+      [req.decoded.uuid, `%${search}%`]
     );
     res.json(data.rows);
   } catch (error) {
@@ -135,7 +171,9 @@ updateProductById = async (req, res) => {
 module.exports = {
   getAllProducts,
   getAllProductsForSale,
+  searchAllProducts,
   getAllProductsForSaleForUser,
+  searchAllProductsForUser,
   getAllProductListingsBySellerId,
   createProduct,
   deleteProductById,

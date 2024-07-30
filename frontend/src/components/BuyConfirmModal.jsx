@@ -21,7 +21,7 @@ const Overlay = (props) => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["forsale"] });
+      queryClient.invalidateQueries({ queryKey: ["search"] });
       queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
   });
