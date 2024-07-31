@@ -38,6 +38,13 @@ const BuyLogout = () => {
           }}
         ></input>
       </div>
+      <div class="container">
+        <div class="row">
+          <span class="col-md-3">product</span>
+          <span class="col-md-6"></span>
+          <span class="col-md-3">price</span>
+        </div>
+      </div>
       {searchdata.map((forsale) => (
         <BuyCardLogout forsale={forsale}></BuyCardLogout>
       ))}

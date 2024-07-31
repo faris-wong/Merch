@@ -150,6 +150,25 @@ const deleteUserById = async (req, res) => {
   }
 };
 
+const deleteUserAdmin = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { uuid } = req.body;
+    await client.query("BEGIN");
+    await client.query("DELETE FROM products WHERE seller_uuid = $1", [uuid]);
+    await client.query("DELETE FROM transactions WHERE buyer_id = $1", [uuid]);
+    await client.query("DELETE FROM users WHERE uuid = $1", [uuid]);
+    res.json({ status: "success", msg: "profile deleted" });
+    await client.query("COMMIT");
+  } catch (error) {
+    await client.query("ROLLBACK");
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "update error" });
+  } finally {
+    client.release();
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -157,4 +176,5 @@ module.exports = {
   login,
   updateUserById,
   deleteUserById,
+  deleteUserAdmin,
 };

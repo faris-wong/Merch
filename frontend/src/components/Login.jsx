@@ -45,31 +45,33 @@ const Login = () => {
   return (
     <>
       <div className={styles.login}>
-        <div className="row">
-          <div className="col-md-3">
-            Email
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></input>
+        <div className={styles.inputscontainer}>
+          <div className={styles.inputs}>
+            <div className>
+              <label>Email :</label>
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></input>
+            </div>
+            <div className>
+              <label>Password :</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              ></input>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-3">
-            Password
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></input>
-          </div>
+        <div className={styles.buttons}>
+          <button onClick={refetch}>Login</button>
+          <button onClick={() => setShowRegister(true)}>Register</button>
+          {showRegister && (
+            <Register setShowRegister={setShowRegister}></Register>
+          )}
         </div>
-        <button onClick={refetch}>Login</button>
-        <button onClick={() => setShowRegister(true)}>Register</button>
-        {showRegister && (
-          <Register setShowRegister={setShowRegister}></Register>
-        )}
       </div>
     </>
   );

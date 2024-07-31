@@ -59,6 +59,14 @@ const Buy = () => {
           <span>Wallet: {profiledata[0].wallet} credits</span>
         )}
       </div>
+      <div class="container">
+        <div class="row">
+          <span class="col-md-3">product</span>
+          <span class="col-md-3">seller</span>
+          <span class="col-md-3">price</span>
+          <span class="col-md-3"></span>
+        </div>
+      </div>
       {forsale.map((forsale) => (
         <BuyCard forsale={forsale}></BuyCard>
       ))}

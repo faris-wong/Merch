@@ -4,11 +4,24 @@ import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
 import ReactDOM from "react-dom";
 import styles from "./css/DeleteList.module.css";
+import kaching from "../assets/cash.mp3";
+import errorsound from "../assets/error.mp3";
 
 const Overlay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
+
+  const playkaching = () => {
+    const audio = new Audio(kaching);
+    audio.play();
+  };
+
+  const playerrorsound = () => {
+    const audio = new Audio(errorsound);
+    audio.play();
+  };
+
   const { mutate } = useMutation({
     mutationFn: async (productid) => {
       return await usingFetch(
@@ -23,6 +36,10 @@ const Overlay = (props) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["forsale"] });
       queryClient.invalidateQueries({ queryKey: ["profile"] });
+      playkaching();
+    },
+    onError: () => {
+      playerrorsound();
     },
   });
 

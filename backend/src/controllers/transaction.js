@@ -66,9 +66,7 @@ createTransaction = async (req, res) => {
   } catch (error) {
     await client.query("ROLLBACK");
     console.error(error.message);
-    res
-      .status(400)
-      .json({ status: "error", msg: "purchase error"});
+    res.status(400).json({ status: "error", msg: "purchase error" });
   } finally {
     client.release();
   }
@@ -91,7 +89,7 @@ getTransactionsByUserId = async (req, res) => {
   const client = await pool.connect();
   try {
     const data = await client.query(
-      "SELECT * FROM transactions JOIN products ON transactions.product_id = products.uuid WHERE buyer_id = $1 OR seller_uuid = $1 ORDER BY date_transacted DESC",
+      "SELECT * FROM transactions JOIN products ON transactions.product_id = products.uuid WHERE buyer_id = $1 OR seller_uuid = $1 ORDER BY date_transacted DESC LIMIT 12",
       [req.decoded.uuid]
     );
     res.json(data.rows);

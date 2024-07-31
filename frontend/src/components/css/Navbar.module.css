@@ -6,9 +6,15 @@
   margin: 0;
   align-items: center;
   justify-content: center;
+  background-color: rgb(153, 247, 150);
 }
 
 .navbar li {
   margin: 0 1rem;
   width: 10rem;
+  text-decoration: none;
+  color: rgb(161, 71, 71);
+}
+a {
+  text-decoration: none;
 }

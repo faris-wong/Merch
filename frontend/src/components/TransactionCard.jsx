@@ -40,17 +40,31 @@ const TransactionCard = (props) => {
     <>
       <div>
         <div>Transaction History</div>
-        <div></div>
+        <div class="row">
+          <div class="col">product</div>
+          <div class="col">price transacted</div>
+          <div class="col">date transacted</div>
+        </div>
         {transactiondata.map((transaction) =>
           transaction.buyer_id === userCtx.uuid ? (
             <li className={styles.bought}>
-              {transaction.product_name} bought for: {transaction.price} date:{" "}
-              {props.formatDate(transaction.date_transacted)}
+              <div class="row">
+                <div class="col">{transaction.product_name}</div>{" "}
+                <div class="col">bought @ {transaction.price}</div>
+                <div class="col">
+                  {props.formatDate(transaction.date_transacted)}
+                </div>
+              </div>
             </li>
           ) : (
             <li className={styles.sold}>
-              {transaction.product_name} sold for: {transaction.price} date:{" "}
-              {props.formatDate(transaction.date_transacted)}
+              <div class="row">
+                <div class="col">{transaction.product_name}</div>
+                <div class="col">sold @ {transaction.price}</div>
+                <div class="col">
+                  {props.formatDate(transaction.date_transacted)}
+                </div>
+              </div>
             </li>
           )
         )}

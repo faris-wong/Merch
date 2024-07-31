@@ -1,8 +1,16 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./css/Navbar.module.css";
+import UserContext from "../context/user";
 
 const Navbar = () => {
+  const userCtx = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/login");
+    location.reload();
+  };
   return (
     <>
       <header className={styles.navbar}>
@@ -24,7 +32,12 @@ const Navbar = () => {
               <NavLink to="/credits">Credits</NavLink>
             </li>
             <li>
-              <NavLink to="/login">Login</NavLink>
+              {!userCtx.accessToken && <NavLink to="/login">Login</NavLink>}
+            </li>
+            <li>
+              {userCtx.accessToken && (
+                <button onClick={handleLogout}>logout</button>
+              )}
             </li>
           </ul>
         </nav>

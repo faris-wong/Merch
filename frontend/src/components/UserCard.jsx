@@ -45,7 +45,10 @@ const UserCard = (props) => {
       <div>Date joined: {props.formatDate(profiledata[0].date_joined)}</div>
       <button onClick={() => setShowUpdateUser(true)}>update</button>
       {showUpdateUser && (
-        <UpdateUserCard setShowUpdateUser={setShowUpdateUser}></UpdateUserCard>
+        <UpdateUserCard
+          setShowUpdateUser={setShowUpdateUser}
+          profiledata={profiledata[0]}
+        ></UpdateUserCard>
       )}
     </div>
   );

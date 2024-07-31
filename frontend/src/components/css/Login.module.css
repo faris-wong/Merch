@@ -1,31 +1,77 @@
-.login button {
-  background-color: #fff;
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #666767; /* Background color */
+}
+
+
+.inputs {
+
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 400px; /* Maximum width for inputs */
+}
+
+.inputs label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.inputs input {
+  
+  height: 40px; /* Fixed height for inputs */
+  padding: 0 10px; /* Horizontal padding */
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box; /* Includes padding and border in total width */
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 250px;
+}
+
+.buttons button {
+  width: 80px; 
+  height: 30px; 
+  padding: 0; 
+  margin: 0 2px; /* Space between buttons */
   border: 1px solid #d5d9d9;
   border-radius: 8px;
-  box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
-  box-sizing: border-box;
-  color: #0f1111;
   cursor: pointer;
-  display: inline-block;
   font-family: "Amazon Ember", sans-serif;
   font-size: 13px;
   line-height: 29px;
-  padding: 0 10px 0 11px;
-  position: relative;
   text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  width: 100px;
+  color: #0f1111;
+  background-color: #9e9595;
+  box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
+  box-sizing: border-box;
 }
 
-.button:hover {
-  background-color: #f7fafa;
+.buttons button:first-of-type {
+  background-color: #007bff;
+  color: white;
 }
 
-.button:focus {
+.buttons button:last-of-type {
+  background-color: #28a745;
+  color: white;
+}
+
+
+.buttons button:hover {
+  opacity: 0.5;
+}
+
+.buttons button:focus {
   border-color: #008296;
   box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
   outline: 0;

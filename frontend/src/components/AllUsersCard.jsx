@@ -25,6 +25,7 @@ const AllUsersCard = (props) => {
 
   const handleDelete = () => {
     mutate(props.users["uuid"]);
+    console.log(props.users["uuid"]);
   };
 
   const formatDate = (date) => {
