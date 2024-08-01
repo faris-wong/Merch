@@ -7,8 +7,8 @@ const Home = () => {
 
   return (
     <>
-      <div>Welome {userCtx.username}</div>
-      <div>readME</div>
+      <div>Welcome {userCtx.username}</div>
+      <div></div>
       <img src={home} style={{ width: "100%", height: "100%" }}></img>
     </>
   );
