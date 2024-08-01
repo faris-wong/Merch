@@ -27,6 +27,7 @@ price DECIMAL(10,2) NOT NULL,
 date_listed TIMESTAMP NOT NULL DEFAULT NOW(),
 seller_uuid UUID NOT NULL REFERENCES users(uuid),
 purchased BOOLEAN NOT NULL DEFAULT false,
+image_url TEXT,
 PRIMARY KEY (uuid)
 );
 

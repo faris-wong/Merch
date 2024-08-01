@@ -100,11 +100,17 @@ getAllProductListingsBySellerId = async (req, res) => {
 createProduct = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { productname, description, price } = req.body;
-
+    const { productname, description, price, imageurl } = req.body;
+    const values = [
+      productname,
+      description,
+      price,
+      imageurl || null,
+      req.decoded.uuid,
+    ];
     const data = await client.query(
-      "INSERT INTO products(product_name, description, price, seller_uuid) VALUES ($1, $2, $3, $4)",
-      [productname, description, price, req.decoded.uuid]
+      "INSERT INTO products(product_name, description, price, image_url, seller_uuid) VALUES ($1, $2, $3, $4, $5)",
+      values
     );
     res.json({ status: "success", msg: "product created" });
   } catch (error) {

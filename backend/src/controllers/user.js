@@ -62,13 +62,17 @@ const login = async (req, res) => {
       [email]
     );
     if (auth.rows.length === 0) {
-      return res.status(401).json({ status: "error", msg: "wrong email" });
+      return res
+        .status(401)
+        .json({ status: "error", msg: "wrong email and/or password" });
     }
 
     const user = auth.rows[0];
     const result = await bcrypt.compare(password, user.password);
     if (!result) {
-      return res.status(401).json({ status: "error", msg: "wrong password" });
+      return res
+        .status(401)
+        .json({ status: "error", msg: "wrong email and/or password" });
     }
     const claims = {
       username: user.username,
