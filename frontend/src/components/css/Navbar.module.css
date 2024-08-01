@@ -6,7 +6,7 @@
   margin: 0;
   align-items: center;
   justify-content: center;
-  background-color: rgb(153, 247, 150);
+  background-color: rgb(73, 86, 72);
 }
 
 .navbar li {
@@ -17,4 +17,5 @@
 }
 a {
   text-decoration: none;
+  color: white;
 }

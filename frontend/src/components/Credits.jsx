@@ -44,7 +44,7 @@ const Credits = () => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         ></input>
-        <button onClick={handleSubmit}>Purchase</button>
+        <button onClick={handleSubmit}>purchase</button>
       </div>
     </>
   );

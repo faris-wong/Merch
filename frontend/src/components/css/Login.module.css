@@ -4,12 +4,10 @@
   justify-content: center;
   align-items: center;
   height: 100vh; /* Full viewport height */
-  background-color: #666767; /* Background color */
+  background-color: gray; /* Background color */
 }
 
-
 .inputs {
-
   margin-bottom: 15px;
   width: 100%;
   max-width: 400px; /* Maximum width for inputs */
@@ -22,14 +20,12 @@
 }
 
 .inputs input {
-  
   height: 40px; /* Fixed height for inputs */
   padding: 0 10px; /* Horizontal padding */
   border: 1px solid #ced4da;
   border-radius: 4px;
   box-sizing: border-box; /* Includes padding and border in total width */
 }
-
 
 .buttons {
   display: flex;
@@ -39,9 +35,9 @@
 }
 
 .buttons button {
-  width: 80px; 
-  height: 30px; 
-  padding: 0; 
+  width: 80px;
+  height: 30px;
+  padding: 0;
   margin: 0 2px; /* Space between buttons */
   border: 1px solid #d5d9d9;
   border-radius: 8px;
@@ -51,7 +47,7 @@
   line-height: 29px;
   text-align: center;
   color: #0f1111;
-  background-color: #9e9595;
+  background-color: gray;
   box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
   box-sizing: border-box;
 }
@@ -65,7 +61,6 @@
   background-color: #28a745;
   color: white;
 }
-
 
 .buttons button:hover {
   opacity: 0.5;

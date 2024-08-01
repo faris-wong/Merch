@@ -61,10 +61,10 @@ const Buy = () => {
       </div>
       <div class="container">
         <div class="row">
-          <span class="col-md-3">product</span>
-          <span class="col-md-3">seller</span>
-          <span class="col-md-3">price</span>
-          <span class="col-md-3"></span>
+          <span class="col-md-4">product</span>
+          <span class="col-md-4">seller</span>
+          <span class="col-md-4">price</span>   
+          <span class="col-md-4"></span>
         </div>
       </div>
       {forsale.map((forsale) => (

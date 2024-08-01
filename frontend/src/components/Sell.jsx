@@ -41,6 +41,14 @@ const Sell = () => {
   return (
     <>
       <div>All {userCtx.username}'s' Listings</div>
+
+      <div className="row">
+        <span className="col-md-3">product</span>
+        <span className="col-md-4">description</span>
+        <span className="col-md-2">price</span>
+      </div>
+
+      <div className="row"></div>
       {listdata.map((list) => (
         <SellCard list={list}></SellCard>
       ))}

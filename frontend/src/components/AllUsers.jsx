@@ -35,7 +35,7 @@ const AllUsers = () => {
   console.log(usersdata);
   return (
     <>
-      <div>ALL USERS</div>
+      <div>All Users</div>
 
       {usersdata.map((users) => {
         return <AllUsersCard users={users}></AllUsersCard>;

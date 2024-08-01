@@ -66,12 +66,14 @@ const Overlay = (props) => {
     if (!createList.productname) {
       newErrors.productname = " product needs a name";
     }
+    if (!createList.price) {
+      newErrors.price = " product needs a price";
+    }
     if (createList.price < 0) {
       newErrors.price = " price cannot be negative";
     }
 
     setErrors(newErrors);
-    console.log(errors.length);
   };
 
   const handleSubmit = () => {

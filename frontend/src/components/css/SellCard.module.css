@@ -1,17 +1,7 @@
 .list {
   display: flex;
   justify-content: space-between;
-  border: 2px solid black;
-  border-radius: 100px
-}
-
-.listname {
-}
-
-.listdesc {
-}
-
-.listprice {
+  border: 1px solid white;
 }
 
 .button {

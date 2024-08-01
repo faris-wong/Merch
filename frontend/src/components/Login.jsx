@@ -42,7 +42,7 @@ const Login = () => {
       userCtx.setUsername(decoded.username);
       navigate("/"); // change to be able to access login page even after logged in
     }
-  }, [data]);
+  }, [data, email, password]);
   console.log(data);
   console.log(email, password);
   return (

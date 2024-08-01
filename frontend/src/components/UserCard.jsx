@@ -36,7 +36,8 @@ const UserCard = (props) => {
 
   return (
     <div>
-      <div>User Profile</div>
+      <div>Profile</div>
+      <div> </div>
       <div>Username: {profiledata[0].username}</div>
       <div>Email: {profiledata[0].email}</div>
       <div>Contact: {profiledata[0].contact}</div>
