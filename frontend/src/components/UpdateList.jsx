@@ -4,11 +4,18 @@ import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
 import ReactDOM from "react-dom";
 import styles from "./css/UpdateList.module.css";
+import successsound from "../assets/success.mp3";
 
 const Overlay = (props) => {
   const usingFetch = useFetch();
   const userCtx = useContext(UserContext);
   const queryClient = useQueryClient();
+
+  const playsuccesssound = () => {
+    const audio = new Audio(successsound);
+    audio.play();
+  };
+
   const [updateList, setUpdateList] = useState({
     productid: props.list.uuid,
     productname: props.list.product_name,
@@ -16,6 +23,22 @@ const Overlay = (props) => {
     price: props.list.price,
   });
 
+  const [errors, setErrors] = useState({});
+
+  const validateUpdateListing = () => {
+    const newErrors = {};
+    if (!updateList.productname || updateList.productname.trim().length === 0) {
+      newErrors.productname = " product needs a name";
+    }
+    if (!updateList.price) {
+      newErrors.price = " product needs a price";
+    }
+    if (updateList.price < 0) {
+      newErrors.price = " price cannot be negative";
+    }
+
+    setErrors(newErrors);
+  };
   const { mutate } = useMutation({
     mutationFn: async (updateData) => {
       const { productid, productname, description, price } = updateData;
@@ -33,13 +56,16 @@ const Overlay = (props) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["list"] });
+      playsuccesssound();
+      props.setShowUpdateList(false);
     },
   });
 
   const handleSubmit = () => {
-    mutate(updateList);
-    console.log(updateList);
-    props.setShowUpdateList(false);
+    validateUpdateListing();
+    if (Object.keys(errors).length === 0) {
+      mutate(updateList);
+    }
   };
 
   return (
@@ -57,6 +83,9 @@ const Overlay = (props) => {
                 value={updateList.productname}
                 type="text"
               ></input>
+              {errors.productname && (
+                <span style={{ color: "red" }}>{errors.productname}</span>
+              )}
             </div>
             <div>
               Description:
@@ -77,6 +106,9 @@ const Overlay = (props) => {
                 value={updateList.price}
                 type="number"
               ></input>
+              {errors.price && (
+                <span style={{ color: "red" }}>{errors.price}</span>
+              )}
             </div>
             <div>
               <button onClick={handleSubmit}>Update</button>

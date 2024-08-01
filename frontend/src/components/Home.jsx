@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import UserContext from "../context/user";
+import home from "../assets/home.jpg";
 
 const Home = () => {
   const userCtx = useContext(UserContext);
@@ -8,6 +9,7 @@ const Home = () => {
     <>
       <div>Welome {userCtx.username}</div>
       <div>readME</div>
+      <img src={home} style={{ width: "100%", height: "100%" }}></img>
     </>
   );
 };

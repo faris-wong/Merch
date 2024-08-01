@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE products (
 uuid UUID DEFAULT uuid_generate_v4(),
-product_name VARCHAR(30) NOT NULL,
+product_name VARCHAR(50) NOT NULL,
 description TEXT,
 price DECIMAL(10,2) NOT NULL,
 date_listed TIMESTAMP NOT NULL DEFAULT NOW(),

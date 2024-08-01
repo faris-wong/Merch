@@ -63,7 +63,7 @@ const Overlay = (props) => {
 
   const validateCreateListing = () => {
     const newErrors = {};
-    if (!createList.productname) {
+    if (!createList.productname || createList.productname.trim().length === 0) {
       newErrors.productname = " product needs a name";
     }
     if (!createList.price) {
