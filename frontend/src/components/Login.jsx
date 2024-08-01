@@ -21,13 +21,16 @@ const Login = () => {
   const { isError, error, data, refetch } = useQuery({
     queryKey: ["login"],
     queryFn: async () => {
-      try {
-        return await usingFetchNT("/login", "POST", { email, password });
-      } catch (error) {
-        throw error.message;
-      }
+      return await usingFetchNT("/login", "POST", { email, password });
+      // try {
+      //   await usingFetchNT("/login", "POST", {
+      //     email,
+      //     password,
+      // } catch {
+      //   throw new Error('error')
+      // });
     },
-    // enabled: false,
+    enabled: false,
   });
 
   useEffect(() => {
@@ -65,6 +68,7 @@ const Login = () => {
             </div>
           </div>
         </div>
+        {isError && <span>{error.message}</span>}
         <div className={styles.buttons}>
           <button onClick={refetch}>Login</button>
           <button onClick={() => setShowRegister(true)}>Register</button>

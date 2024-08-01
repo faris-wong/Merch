@@ -9,6 +9,7 @@ import ReactDOM from "react-dom";
 import UserContext from "../context/user";
 import styles from "./css/CreateList.module.css";
 import useFetch from "../hooks/useFetch";
+import successsound from "../assets/success.mp3";
 
 const Overlay = (props) => {
   const usingFetch = useFetch();
@@ -18,30 +19,66 @@ const Overlay = (props) => {
     productname: "",
     description: "",
     price: "",
+    image: null,
   });
+
+  const playsuccesssound = () => {
+    const audio = new Audio(successsound);
+    audio.play();
+  };
 
   const { mutate } = useMutation({
     mutationFn: async (formData) => {
-      const { productname, description, price } = formData;
+      const { productname, description, price, image } = formData;
+
+      //   const data = new FormData();
+      //   data.append("productname", productname);
+      //   data.append("description", description);
+      //   data.append("price", price);
+      //   if (image) {
+      //     data.append("imageurl", image);
+      //   }
+
       return await usingFetch(
         "/product",
         "PUT",
-        {
-          productname,
-          description,
-          price,
-        },
-        userCtx.accessToken
+
+        formData,
+        userCtx.accessToken,
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["list"] });
+      playsuccesssound();
+      props.setShowCreateListing(false);
     },
   });
 
+  const handleFileChange = (e) => {
+    setCreateList({ ...createList, image: e.target.files[0] });
+  };
+
+  const [errors, setErrors] = useState({});
+
+  const validateCreateListing = () => {
+    const newErrors = {};
+    if (!createList.productname) {
+      newErrors.productname = " product needs a name";
+    }
+    if (createList.price < 0) {
+      newErrors.price = " price cannot be negative";
+    }
+
+    setErrors(newErrors);
+    console.log(errors.length);
+  };
+
   const handleSubmit = () => {
-    mutate(createList);
-    props.setShowCreateListing(false);
+    validateCreateListing();
+    if (Object.keys(errors).length === 0) {
+      mutate(createList);
+    }
   };
 
   return (
@@ -60,6 +97,9 @@ const Overlay = (props) => {
                 value={createList.productname}
                 type="text"
               ></input>
+              {errors.productname && (
+                <span style={{ color: "red" }}>{errors.productname}</span>
+              )}
             </div>
             <div>
               Description:
@@ -80,6 +120,13 @@ const Overlay = (props) => {
                 value={createList.price}
                 type="number"
               ></input>
+              {errors.price && (
+                <span style={{ color: "red" }}>{errors.price}</span>
+              )}
+            </div>
+            <div>
+              Upload image:
+              <input onChange={handleFileChange} type="file"></input>
             </div>
             <button onClick={handleSubmit}>Submit</button>
           </div>
