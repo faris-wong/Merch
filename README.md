@@ -4,15 +4,25 @@ Merch is an online marketplace that allows users to list items for sale and brow
 
 ## FEATURES
 
-### User Profiles: Create a profile page to include important contact information and view wallet credits. This page also has a transaction history to view the user's previous purchases and sales.
+### Authentication
 
-### Buy page: Users are able to browse through a list of all items sold on the marketplace. The search bar also allows users to filter through specific items they are looking for.
+Logging into account will give a more personalised experience to the user
 
-### Sell page: Users are able to create new listings to be put up for sale in other user's buy page. They are also able to update or delete any current listing here.
+### User Profiles
 
-### Admin Controls: Admins have the authority to delete existing user accounts.
+Each registered user will have a profile page that include important contact information and can view their wallet credits. This page also has a transaction history to view the user's previous purchases and sales.
 
-When visiting the site without logging in, users will only be able to browse through the buy page, which lists all items for sale but are unable to purchase without creating an account.
+### Buy page
+
+Users, both registered and unregistered are able to browse through a list of all items sold on the marketplace. The search bar also allows users to filter through specific items they are looking for. However, only registered users can purchase these items.
+
+### Sell page
+
+Registered users are able to create new listings to be put up for sale in other user's buy page. They are also able to update or delete any current listing here.
+
+### Admin Controls
+
+Admin accounts are authorised to delete any existing user accounts.
 
 ## Technologies Used
 
@@ -36,6 +46,11 @@ When visiting the site without logging in, users will only be able to browse thr
 ### Frontend
 
 - VITE_SERVER
+
+## Future Developments
+
+- allowing users to upload images to product listings using Cloudinary
+- implement real time updates for any new listings using WebSockets
 
 ## Screenshots
 
